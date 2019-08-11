@@ -1,0 +1,434 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{systeme}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pifont}
+\usepackage{mdframed,color}
+\usepackage[letterpaper, left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+
+\theoremstyle{statement}
+\newtheorem*{atmProp}{Proposition}
+
+\theoremstyle{statement}
+\newtheorem*{atmStat}{Statement}
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\newenvironment{Solution}{\noindent\ignorespaces\paragraph{Solution:}}{\hfill \ding{122}\par\noindent}
+
+\newcount\arrowcount
+\newcommand\arrows[1]{
+        \global\arrowcount#1
+        \ifnum\arrowcount>0
+                \begin{matrix}
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand\nextarrow[1]{
+        \global\advance\arrowcount-1
+        \ifx\relax#1\relax\else \xrightarrow{#1}\fi
+        \ifnum\arrowcount=0
+                \end{matrix}
+        \else
+                \\
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand{\func}[2]{\operatorname{#1}(#2)}
+\newcommand{\trans}[2]{\func{#1}{\Vec{#2}}}
+
+\title{Extra Credit Vector Spaces Homework}
+\author{Rafael Laya}
+\date{Fall 2018}
+
+\begin{document}
+    \maketitle
+ 
+    \section*{Subspaces}
+    \subsection*{Problem 1 (Unique)}
+    \begin{atmStat}
+    Your job is to construct ``almost'' subspaces that satisfy some, but not all, of the subspace conditions. Show that your construction verifies the given criteria.
+    
+    a) Find a subset of $\R^3$ that contains the zero vector, is closed under multiplication, but is not closed under addition.
+    
+    b) Find a subset of $\R^3$ that is closed under addition, but not under scalar multiplication and does not contain the zero vector. 
+    \end{atmStat}
+    \begin{Solution}
+
+    a) Consider the subset H of $\R^3$ that is formed by the $x$ axis and the $y$ axis. That is:
+    
+    $$
+    H = \left\{ \Vec{x} = \begin{bmatrix} x\\y\\z \end{bmatrix} \in \R^3 
+    \mid
+    (y = 0 \land z = 0) \lor (x=0 \land z=0)
+    \right\}
+    $$
+    
+    Also let $\Vec{v} = \begin{bmatrix} v_1\\v_2\\v_3\end{bmatrix}, \Vec{u} = \begin{bmatrix} u_1\\u_2\\u_3\end{bmatrix}$ be two vectors in $H$ and $c \in \R$
+    
+    \begin{itemize}
+    \item $H$ contains the zero vector since the zero vector has $y$ and $z$ coordinates zero (in fact its $x$ coordinate is also zero!).
+    
+    \item Consider $c\Vec{v} = \begin{bmatrix} cv_1\\cv_2\\cv_3\end{bmatrix}$. Since $\Vec{v}\in H$ then either ($v_2 = 0$ and $v_3 = 0$) or ($v_1 = 0$ and $v_3 = 0$). Therefore either ($cv_2 = 0$ and $cv_3=0$) or ($cv_1 = 0$ and $cv_3 = 0$). This implies that $c\Vec{v} \in H$ and so $H$ is closed under scalar multiplication.
+    
+    \item Consider the case when $v_1=1, v_2=0, v_3=0$ and $v_1 = 0, v_2=1, v_3=0$. The sum is $\Vec{v}+\Vec{u}=\begin{bmatrix} 1 \\1 \\ 0\end{bmatrix}$. Notice however that $\Vec{v}+\Vec{u} \notin H$ since ($1=0$ and $0=0$) is false and ($1=0$ and $0=0$) is false (The first one refers to $y=0$ and $z=0$ and the second one to $x=0$ and $z=0$). Therefore $H$ is not closed under addition.
+    
+    \end{itemize}
+    
+    b) Consider the subset $H$ of $\R^3$ that is formed by the first octant without including the axes, that is:
+    
+    $$
+    H = \left\{ \Vec{x} = \begin{bmatrix} x_1\\x_2\\x_3\end{bmatrix} \in \R^3
+    \mid
+    x_1 > 0 \land x_2 > 0 \land x_3 > 0
+    \right\}
+    $$
+    
+    Let also $\Vec{v} = \begin{bmatrix} v_1\\v_2\\v_3\end{bmatrix}, \Vec{u} = \begin{bmatrix} u_1\\u_2\\u_3\end{bmatrix}$ be two vectors in $H$, and $c$ a scalar. Then consider: 
+    
+    \begin{itemize}
+        \item The sum of $\Vec{v}$ and $\Vec{u}$ is $\Vec{v}+\Vec{u}=\begin{bmatrix} v_1+u_1\\v_2+u_2\\v_3+u_3\end{bmatrix}$ is in $H$ since $\Vec{v}, \Vec{u} \in H$ and therefore $v_1, v_2, v_3, u_1, u_2, u_3$ are all greater than zero and the sum of two real numbers greater than zero is still greater than zero. $H$ is closed under addition.
+        \item Consider the case when $v_1=1, v_2=1, v_3=1$ and $c=-1$. Then $c\Vec{v} = \begin{bmatrix} -1\\-1\\-1 \end{bmatrix}$ which is not in $H$ since $-1 < 0$. $H$ is not closed under scalar multiplication.
+        \item The zero vector is not in $H$ since $0 > 0$ is a false statement. 
+    \end{itemize}
+    \end{Solution}
+    
+    \section*{General Vector Spaces}
+    \subsection*{Problem 1 (Unique)}
+    \begin{atmStat}
+    Consider the set of vectors $\left\{ \sin^3(x),\sin(3x),\sin(x) \right\}$ in the vector space $\operatorname{C}(-\infty,\infty)$. Use your trig identities to show that this is a linearly dependent set of vectors. Prove any facts you use beyond the Pythagorean identities and sum/difference of angle formulas. 
+    \end{atmStat}
+    \begin{Solution}
+    We will prove that we can write one of the vectors in the set as a linear combination of the other vectors. Start from $\sin(3x)$:
+    
+    \begin{align*}
+        \sin(3x) &= \sin(2x+x) \\
+        &= \sin(2x)\cos(x) + \cos(2x)\sin(x) \\
+        &= (2\sin(x)\cos(x))\cos(x) + (\cos^2(x)-\sin^2(x))sin(x) \\
+        &= 2\sin(x)\cos^2(x) + (1-\sin^2(x)-\sin^2(x))sin(x) \\
+        &= 2\sin(x)(1-\sin^2(x)) + (1-2\sin^2(x))sin(x) \\
+        &= 2\sin(x) - 2\sin^3(x) + \sin(x) - 2 \sin^3(x) \\
+        &= 3\sin(x) - 4\sin^3(x) 
+    \end{align*}
+    
+    Therefore, 
+    
+    $$
+    x_1\sin^3(x) + x_2\sin(3x) + x_3 \sin(x) = 0_\infty
+    $$
+    
+    Where $0_\infty$ is the function whose value is always zero in $(-\infty, \infty)$. Has a non-trivial solution $x_1 = 4, x_2 = 1, x_3=-3$ since: 
+    
+    \begin{align*}
+        (4)\sin^3(x) + (1) \sin(3x) + (-3)\sin(x)  &= 4\sin^3(x) + (3\sin(x) - 4\sin^3(x)) - 3\sin(x) \\
+        &= 4\sin^3(x) + 3\sin(x) - 4\sin^3(x) - 3\sin(x) \\
+        &= (4\sin^3(x) - 4\sin^3(x)) + (3\sin(x) - 3\sin(x)) \\
+        &= 0_\infty + 0_\infty \\
+        &= 0_\infty
+    \end{align*}
+    The properties we used (asociativity, commutativity, distributive) come from assumption since $C(-\infty, \infty)$ is a vector space and also from our knowledge of functions in calculus (trig identities).
+    
+    
+    
+    \end{Solution}
+    
+    \section*{Transformations Between General Vector Spaces}
+    \subsection*{Problem 1 (Unique)}
+    \begin{atmStat}
+    Let $\operatorname{T}:\mathbb{P}_3\longrightarrow\R^3$ be the transformation defined by $\trans{T}{p}=\left(\Vec{p}(-2), \Vec{p}(0), \Vec{p}(1)\right)$. Each entry evaluates the polynomial $\Vec{p}$ at the value $-2,0$, and $1$, respectively.
+    
+    a) Show that $\operatorname{T}$ is linear.
+    
+    b) Is $\operatorname{T}$ one-to-one? Why or Why not?
+    
+    c) Is $\operatorname{T}$ onto? Why or Why not?
+    
+    d) Describe the Kernel and the Range of this transformation.
+    
+    \end{atmStat}
+    \begin{Solution}
+    a) I am gonna write vectors in $\R^3$ as column vectors for ease of writing. Let $\Vec{v}, \Vec{w} \in \mathbb{P}_3$. Then $\Vec{v}(t) = v_3t^3+v_2t^2+v_1t+v_0$ and $\Vec{w}(t)= w_3t^3+w_2t^2+w_1t+w_0$ for any chosen $v_0,\dots,v_3,w_0,\dots,w_3 \in \R$ and for all $t \in \R$. Let's show that $\operatorname{T}$ is a linear transformation:
+    
+    \begin{align*}
+        \func{T}{\Vec{v}+\Vec{w}} &= \operatorname{T}((v_3t^3+v_2t^2+v_1t+v_0) + (w_3t^3+w_2t^2+w_1t+w_0)) \\
+        &= \operatorname{T}((v_3+w_3)t^3 + (v_2+w_2)t^2 + (v_1+w_1)t + (v_0+w_0)) \\
+        &= \begin{bmatrix}
+        (v_3+w_3)(-2)^3 + (v_2+w_2)(-2)^2 + (v_1+w_1)(-2) + (v_0+w_0) \\ 
+        (v_3+w_3)(0)^3 + (v_2+w_2)(0)^2 + (v_1+w_1)(0) + (v_0+w_0) \\
+        (v_3+w_3)(1)^3 + (v_2+w_2)(1)^2 + (v_1+w_1)(1) + (v_0+w_0) \\ 
+        \end{bmatrix} \\
+        &= \begin{bmatrix}
+        (-8v_3 + 4v_2 - 2v_1 + v_0) +
+        (-8w_3 + 4w_2 - 2w_1 + w_0) \\
+        v_0 + w_0 \\
+        (v_3 + v_2 + v_1 + v_0) 
+        + (w_3 + w_2 + w_1 + w_0)
+        \end{bmatrix} \\
+        &= \begin{bmatrix}
+        (-8v_3 + 4v_2 - 2v_1 + v_0) \\
+        v_0 \\
+        v_3 + v_2 + v_1 + v_0
+        \end{bmatrix}
+        + 
+        \begin{bmatrix}
+        (-8w_3 + 4w_2 - 2w_1 + w_0) \\
+        w_0 \\
+        w_3 + w_2 + w_1 + w_0
+        \end{bmatrix} \\
+        &= 
+        \begin{bmatrix}
+        v_3(-2)^3 + v_2(-2)^2 + v_1(-2) + v_0 \\
+        v_3(0)^3 + v_2(0)^2 + v_1(0) + v_0 \\
+        v_3(1)^3 + v_2(1)^2 + v_1(1) + v_0
+        \end{bmatrix}
+        +
+        \begin{bmatrix}
+        w_3(-2)^3 + w_2(-2)^2 + w_1(-2) + w_0 \\
+        w_3(0)^3 + w_2(0)^2 + w_1(0) + w_0 \\
+        w_3(1)^3 + w_2(1)^2 + w_1(1) + w_0
+        \end{bmatrix} \\
+        &=
+        \begin{bmatrix}
+        \Vec{v}(-2) \\
+        \Vec{v}(0)\\
+        \Vec{v}(1)
+        \end{bmatrix}
+        +
+        \begin{bmatrix}
+        \Vec{w}(-2) \\
+        \Vec{w}(0)\\
+        \Vec{w}(1)
+        \end{bmatrix} \\
+        &= 
+        \operatorname{T}(\Vec{v}) + \operatorname{T}(\Vec{w})
+    \end{align*}
+    And: 
+    \begin{align*}
+        \operatorname{T}(c\Vec{v}) &= \operatorname{T}(c(v_3t^3+v_2t^2+v_1t+v_0)) \\
+        &= \operatorname{T}((cv_3)t^3 + (cv_2)t^2 + (cv_1)t + (cv_0)) \\
+        &=
+        \begin{bmatrix}
+        (cv_3)(-2)^3 + (cv_2)(-2)^2 + (cv_1)(-2) + (cv_0) \\
+        (cv_3)(0)^3 + (cv_2)(0)^2 + (cv_1)(0) + (cv_0) \\
+        (cv_3)(1)^3 + (cv_2)(1)^2 + (cv_1)(1) + (cv_0)
+        \end{bmatrix} \\ 
+        &= 
+        \begin{bmatrix}
+        c (v_3(-2)^3 + v_2(-2)^2 + v_1(-2) + v_0) \\
+        c (v_3(0)^3 + v_2(0)^2 + v_1(0) + v_0) \\
+        c (v_3(1)^3 + v_2(1)^2 + v_1(1) + v_0) \\
+        \end{bmatrix} \\
+        &= 
+        c
+        \begin{bmatrix}
+        \Vec{v}(-2) \\
+        \Vec{v}(0) \\
+        \Vec{v}(1)
+        \end{bmatrix} \\
+        &= 
+        c\operatorname{T}(\Vec{v})
+    \end{align*}
+    Therefore $\operatorname{T}$ is linear. 
+    
+    
+    b) Let $\Vec{v}, \Vec{w}$ be defined as in part (a). Let's see if $\operatorname{T}$ is one-to-one. Suppose $\operatorname{T}(\Vec{v})=\operatorname{T}(\Vec{w})$. This is iff: 
+
+    \begin{align*}
+        \operatorname{T}(\Vec{v}) &= \operatorname{T}(\Vec{w}) \\
+        \begin{bmatrix}
+        v_3(-2)^3 + v_2(-2)^2 + v_1(-2) + v_0 \\
+        v_3(0)^3 + v_2(0)^2 + v_1(0) + v_0 \\
+        v_3(1)^3 + v_2(1)^2 + v_1(1) + v_0
+        \end{bmatrix}
+        &= 
+        \begin{bmatrix}
+        w_3(-2)^3 + w_2(-2)^2 + w_1(-2) + w_0 \\
+        w_3(0)^3 + w_2(0)^2 + w_1(0) + w_0 \\
+        w_3(1)^3 + w_2(1)^2 + w_1(1) + w_0
+        \end{bmatrix}
+        \\
+        \begin{bmatrix}
+        -8v_3 + 4v_2 + -2v_1 + v_0 \\
+        v_0 \\
+        v_3 + v_2 + v_1 + v_0
+        \end{bmatrix}
+        &= 
+        \begin{bmatrix}
+        -8w_3 + 4w_2 + -2w_1 + w_0 \\
+        w_0 \\
+        w_3 + w_2 + w_1 + w_0
+        \end{bmatrix}
+    \end{align*}
+    
+    Which implies: 
+    
+    \systeme{v_0 -2v_1+4v_2-8v_3 + 8w_3-4w_2+2w_1-w_0=0, v_0-w_0=0, v_0+v_1+v_2+v_3-w_0-w_1-w_2-w_3=0}\\
+    
+    
+    Which can be solved by Row reducing the augmented matrix associated to the homogeneous system of equations in the variables $v_0, v_1, v_2, v_3, w_0, w_1, w_2, w_3$:
+    
+    $$
+    \begin{bmatrix}
+    1 & -2 & 4 & -8 & -1 & 2 & -4 & 8 && 0 \\
+    1 &  0 & 0 &  0 & -1 & 0 &  0 & 0 && 0 \\
+    1 &  1 & 1 &  1 & -1 &-1 & -1 &-1 && 0
+    \end{bmatrix}
+    $$
+    $$
+    \arrows3{}{R_2-R_1}{R_3-R_1}
+    \begin{bmatrix}
+    1 & -2 & 4 & -8 & -1 & 2 & -4 & 8 && 0 \\
+    0 &  2 &-4 &  8 &  0 &-2 &  4 &-8 && 0 \\
+    0 &  3 &-3 &  9 &  0 &-3 &  3 &-9 && 0
+    \end{bmatrix}
+    $$
+    $$
+    \arrows3{}{\frac{1}{2}R_2}{}
+    \begin{bmatrix}
+    1 & -2 & 4 & -8 & -1 & 2 & -4 & 8 && 0 \\
+    0 &  1 &-2 &  4 &  0 &-1 &  2 &-4 && 0 \\
+    0 &  3 &-3 &  9 &  0 &-3 &  3 &-9 && 0
+    \end{bmatrix}
+    $$
+    $$
+    \arrows3{R_1+2R_2}{}{R_3-3R_2}
+    \begin{bmatrix}
+    1 &  0 & 0 &  0 & -1 & 0 &  0 & 0 && 0 \\
+    0 &  1 &-2 &  4 &  0 &-1 &  2 &-4 && 0 \\
+    0 &  0 & 3 & -3 &  0 & 0 & -3 & 3 && 0
+    \end{bmatrix}
+    $$
+    $$
+    \arrows3{}{}{\frac{1}{3}R_3}
+    \begin{bmatrix}
+    1 &  0 & 0 &  0 & -1 & 0 &  0 & 0 && 0 \\
+    0 &  1 &-2 &  4 &  0 &-1 &  2 &-4 && 0 \\
+    0 &  0 & 1 & -1 &  0 & 0 & -1 & 1 && 0
+    \end{bmatrix}
+    $$
+    $$
+    \arrows3{}{R_2+2R_3}{}
+    \begin{bmatrix}
+    1 &  0 & 0 &  0 & -1 & 0 &  0 & 0 && 0 \\
+    0 &  1 & 0 &  2 &  0 &-1 &  0 &-2 && 0 \\
+    0 &  0 & 1 & -1 &  0 & 0 & -1 & 1 && 0
+    \end{bmatrix}
+    $$
+    
+    Which yields the system of equations:
+    
+    \systeme{v_0 - w_0 = 0, v_1 + 2v_3 -w_1 - 2w_3 = 0, v_2-v_3-w_2+w_3=0}\\
+    =\systeme{v_0 = w_0, v_1+2v_3 = w_1+2w_3, v_2-v_3 = w_3 - w_3}\\
+    
+    Which does not imply $\Vec{v}=\Vec{w}$. Choose for instance $v_0=0,v_1=v_2=v_3=1,w_1=3,w_0=w_2=w_3=0$ and the system above is satisfied but $\Vec{v}(t)\neq\Vec{w}(t)$ for all $t \in \R$ and therefore $\operatorname{T}$ is not one-to-one.\\
+    
+    c) A vector $\Vec{b}=\begin{bmatrix} b_1\\b_2\\b_3\end{bmatrix} \in \R^3$ is in the range of $\operatorname{T}$ if and only if there is some $\Vec{v} \in \mathbb{P}_3$ such that if $\Vec{v}(t)=v_3t^3+v_2t^2+v_1t+v_0$ then $\operatorname{T}(\Vec{v})=\Vec{b}$: 
+    
+    \begin{align*}
+    \operatorname{T}(\Vec{v}) &= \operatorname{T}(v_3t^3+v_2t^2+v_1t+v_0) \\
+    &= \begin{bmatrix}
+    v_3(-2)^3 + v_2(-2)^2 + v_1(-2) + v_0 \\
+    v_3(0)^3 + v_2(0)^2 + v_1(0) + v_0 \\
+    v_3(1)^3 + v_2(1)^2 + v_1(1) + v_0 
+    \end{bmatrix} \\
+    &= 
+    \begin{bmatrix}
+    -8v_3 + 4v_2 - 2v_1 + v_0 \\
+    v_0 \\
+    v_3 + v_2 + v_1 + v_0 
+    \end{bmatrix} \\
+    &= \begin{bmatrix}
+    b_1 \\
+    b_2 \\
+    b_3
+    \end{bmatrix}
+    \end{align*}
+    
+    This yields the system of equations:\\
+    
+    \systeme{-8v_3+4v_2-2v_1+v_0=b_1, v_0=b_2, v_0+v_1+v_2+v_3=b_3}\\
+    
+    Using theorem 4 in Chapter 1 we only have to look at the number of pivots in the coefficient matrix of the system. 
+    
+    $$
+    \begin{bmatrix}
+    1 & -2 & 4 & -8 \\
+    1 & 0 & 0 & 0 \\
+    1 & 1 & 1 & 1
+    \end{bmatrix}
+    \arrows3{}{R_2-R_1}{R_3-R_1}
+    \begin{bmatrix}
+    1 & -2 & 4 & -8 \\
+    0 &  2 &-4 & 8 \\
+    0 &  3 &-3 & 9
+    \end{bmatrix}
+    \arrows3{}{\frac{1}{2}R_2}{}
+    \begin{bmatrix}
+    1 & -2 & 4 & -8 \\
+    0 &  1 &-2 & 4 \\
+    0 &  3 &-3 & 9
+    \end{bmatrix}
+    \arrows3{R_1+2R_2}{}{R_3-3R_2}
+    \begin{bmatrix}
+    1 &  0 & 0 & 0 \\
+    0 &  1 &-2 & 4 \\
+    0 &  0 & 3 &-3
+    \end{bmatrix}
+    $$
+    $$
+    \arrows3{}{}{\frac{1}{3}R_3}
+    \begin{bmatrix}
+    1 &  0 & 0 & 0 \\
+    0 &  1 &-2 & 4 \\
+    0 &  0 & 1 &-1
+    \end{bmatrix}
+    \arrows3{}{R_2+2R_3}{}
+    \begin{bmatrix}
+    1 &  0 & 0 & 0 \\
+    0 &  1 & 0 & 2 \\
+    0 &  0 & 1 &-1
+    \end{bmatrix}
+    $$
+    
+    Which has a pivot in every row, therefore the system is always consistent and the transformation is onto. 
+    
+    d) Since the transformation is onto then the range of the transformation $\operatorname{T}$ is $\R^3$. Using the reduced echelon form of part (c) we can describe the kernel of the transformation by augmenting with the zero column and we obtain the equations: 
+    
+    \systeme{v_0 = 0, v_1 + 2v_3 = 0, v_2-v_3 = 0} ; $v_3 $ is free\\
+    
+    or \\
+    
+    \systeme{v_0 = 0, v_1 = -2s, v_2=s, v_3=s\in\R}
+    
+    The Kernel is then given by the vectors $\Vec{v}$ such that $\Vec{v}(t)=st^3+st^2-2st=s(t^3+t^2-2t)$ and in set notation:
+    
+    $$
+    \operatorname{Ker}(T)=\left\{ 
+    \Vec{p}(t) \in \mathbb{P}_3 
+    \mid 
+    \Vec{p}(t) = s(t^3 + t^2 - 2t)
+    \right\}
+    $$
+    
+    The fact that the dimension of the Kernel and the Range add up to four (the dimension of $\mathbb{P}_3$) adds confidence to our results, plus one can plug in vectors in the kernel obtained from the definition above and see that $\operatorname{T}(\Vec{v})=\Vec{0}$
+    
+    \end{Solution}
+    
+\end{document}

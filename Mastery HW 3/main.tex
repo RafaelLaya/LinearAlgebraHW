@@ -1,0 +1,260 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{systeme}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pifont}
+\usepackage{mdframed,color}
+\usepackage[left=3cm, right=3cm, top=3cm]{geometry}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+
+\theoremstyle{statement}
+\newtheorem*{atmProp}{Proposition}
+
+\theoremstyle{statement}
+\newtheorem*{atmStat}{Statement}
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\newenvironment{Solution}{\noindent\ignorespaces\paragraph{Solution:}}{\hfill \ding{122}\par\noindent}
+
+\newcount\arrowcount
+\newcommand\arrows[1]{
+        \global\arrowcount#1
+        \ifnum\arrowcount>0
+                \begin{matrix}
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand\nextarrow[1]{
+        \global\advance\arrowcount-1
+        \ifx\relax#1\relax\else \xrightarrow{#1}\fi
+        \ifnum\arrowcount=0
+                \end{matrix}
+        \else
+                \\
+                \expandafter\nextarrow
+        \fi
+}
+
+\title{Mastery Homework 3}
+\author{Rafael Laya}
+\date{Fall 2018}
+
+\begin{document}
+    \maketitle
+
+    \section*{Section 1.8}
+        \subsection*{Problem 26.} 
+        
+        \begin{atmStat}
+        Let $\Vec{u}$ and $\Vec{v}$ be linearly independent vectors in $\R^3$, and let $P$ be the plane through $\Vec{u}, \Vec{v}, $ and $\Vec{0}$. The parametric equation of $P$ is $\Vec{x} = s\Vec{u} + t\Vec{v}$ (with $s, t \in \R$). Show that a linear transformation $T: \R^3 \longrightarrow \R^3$ maps $P$ onto a plane through $\Vec{0}$, or onto a line through $\Vec{0}$, or onto just the origin in $\R^3$. What must be true about $\operatorname{T}(\Vec{u})$ and $\operatorname{T}(\Vec{v})$ in order for the image of the plane $P$ to be a plane?
+        \end{atmStat}
+        
+        \begin{Solution}
+        let $T: \R^3 \longrightarrow \R^3$ be a linear transformation. We want to apply $T$ to the parametric equation of the plane $P$ in order to apply linearity and see what corresponds to the parametric equation that we obtain. From there we will be able to deduce what has to be true about $\operatorname{T}(\Vec{u})$ and $\operatorname{T}(\Vec{v})$ in order for the image of the plane $P$ to be a plane. Therefore using the linearity of $T$ consider:
+        
+        \begin{align*}
+            \operatorname{T}(\Vec{x}) & = \operatorname{T}(s\Vec{u} + \operatorname{t\Vec{v}})  \\
+            & = \operatorname{T}(s\Vec{u}) +
+            t\operatorname{T}(t\Vec{v}) \\
+            & = s\operatorname{T}(\Vec{u}) + t\operatorname{T}(\Vec{v})  \\ 
+        \end{align*}
+        
+        Every $\Vec{x}$ gets mapped as a linear combination of $\operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})$. Therefore the plane $P$ gets mapped into $\operatorname{Span}( \{ \operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})\})$. Then:
+        
+        \begin{itemize}
+            \item If $\operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})$ are both the zero vector, then $\operatorname{Span}(\{ \operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})\}) = \{ \Vec{0}\}$ and the plane $P$ gets mapped directly into the Origin, $\Vec{0}$. See that if we let $\operatorname{T}(\Vec{u}) = \operatorname{T}(\Vec{v}) = \Vec{0}$ then: 
+            
+            $$\operatorname{T}(\Vec{x})=s(\Vec{0})+t(\Vec{0})=\Vec{0}+\Vec{0}=\Vec{0}$$
+            
+            \item If $\operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})$ are linearly dependent and they are not both zero (say $\operatorname{T}(\Vec{u}) \neq \Vec{0}$, without loss of generality), then either one vector is zero and the Span is the line that goes through the origin and the other vector (say $\operatorname{T}(\Vec{u})$), or one is a multiple $k\neq0$ of the other and $\operatorname{Span}(\{ \operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})\}) = 
+            \operatorname{Span}(\{ \operatorname{T}(\Vec{u}), k\operatorname{T}(\Vec{u})\}) = 
+            \operatorname{Span}(\{ \operatorname{T}(\Vec{u})\})$ or simply by theorem since $\{ \operatorname{T}(\Vec{u})\}$ is a linearly independent set and $\{ \operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})\}$ is linearly dependent (after we added only one vector to the set) they have the same Span, which is a line through the origin. See that if we let $\operatorname{T}(\Vec{v})=k\operatorname{T}(\Vec{u})$ 
+            $$\operatorname{T}(\Vec{x})=s\operatorname{T}(\Vec{u})+tk\operatorname{T}(\Vec{v}) = (s+tk)\operatorname{T}(\Vec{u})$$
+            or if we let $\operatorname{T}(\Vec{v}) = \Vec{0}$ while $\operatorname{T}(\Vec{u})\neq \Vec{0}$ then:
+            $$\operatorname{T}(\Vec{x})=s\operatorname{T}(\Vec{u})+t(\Vec{0})=s\operatorname{T}(\Vec{u})+\Vec{0}=s\operatorname{T}(\Vec{u})$$
+            In any case, this is the equation of a line through the origin.
+            \item If $\operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})$ are linearly independent, then $\operatorname{Span}(\{ \operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})\})$ is a Plane through the origin and through both vectors $\operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})$ (the equation that led to this discussion is precisely the parametric equation of a plane).
+        \end{itemize}
+        
+        Looking at what we have in our third bullet point we can also answer the last question: $\operatorname{T}(\Vec{u}), \operatorname{T}(\Vec{v})$ have to be linearly independent so that the image of the plane $P$ is mapped into another plane under the transformation $T$.
+        
+        \end{Solution}
+    
+        \subsection*{Problem 31}
+        \begin{atmStat}
+        Let $T: \R^n \longrightarrow \R^m$ be a linear transformation, and let $\{\Vec{v_1}, \Vec{v_2}, \Vec{v_3} \}$ be a linearly dependent set in $\R^n$. Explain Why the Set $\{ \operatorname{T}(\Vec{v_1}), \operatorname{T}(\Vec{v_2}), \operatorname{T}(\Vec{v_3})\}$ is linearly dependent.
+     
+        \end{atmStat}
+        \begin{Solution}
+        We will use the definition of linearly dependent set of vectors for $\{\Vec{v_1}, \Vec{v_2}, \Vec{v_3} \}$ and then we will apply the transformation $T$ to our resulting equation, by linearity we will be able to extract the coefficients of the linear combination and decide about the linearly dependency of the set $\{ \operatorname{T}(\Vec{v_1}), \operatorname{T}(\Vec{v_2}), \operatorname{T}(\Vec{v_3})\}$ (which will show atleast a non-trivial solution). Suppose then $\{\Vec{v_1}, \Vec{v_2}, \Vec{v_3} \}$ is a linearly dependent set in $\R^n$. That is, 
+        
+        $$x_1\Vec{v_1} + x_2\Vec{v_2} + x_3\Vec{v_3} = \Vec{0}$$
+        
+        Has a non-trivial solution $(c_1, c_2, c_3) \neq (0, 0, 0)$. Apply $T$ to the equation above when $(x_1, x_2, x_3) = (c_1, x_2, c_3)$
+        \begin{align*}
+            \operatorname{T}(c_1\Vec{v_1} + c_2\Vec{v_2} + c_3\Vec{v_3})
+            & = \operatorname{T}(\Vec{0}) \\
+        \end{align*}
+        
+        Using the linearity of $T$, and the fact that $\operatorname{T}(\Vec{0}) = \operatorname{T}(\Vec{0} + \Vec{0}) = \operatorname{T}(\Vec{0}) + \operatorname{T}(\Vec{0})$ and therefore $\operatorname{T}(\Vec{0}) = \Vec{0}$ (keep in mind that the input is the vector zero in $\R^n$ and the output is the vector zero in $\R^m$),
+        \begin{align*}
+            \operatorname{T}(c_1\Vec{v_1} + c_2\Vec{v_2} + c_3\Vec{v_3})
+            & = \operatorname{T}(c_1\Vec{v_1})
+            + \operatorname{T}(c_2\Vec{v_2}) 
+            + \operatorname{T}(c_3\Vec{v_3}) \\
+            & = c_1 \operatorname{T}(\Vec{v_1})
+            + c_2 \operatorname{T}(\Vec{v_2})
+            + c_3 \operatorname{T}(\Vec{v_3}) = \Vec{0}
+        \end{align*}
+        
+        Therefore,  
+        
+        $$x_1\operatorname{T}(\Vec{v_1})
+        + x_2\operatorname{T}(\Vec{v_2})
+        + x_3\operatorname{T}(\Vec{v_3})
+        = \Vec{0}$$
+        Has a non-trivial solution $(x_1, x_2, x_3) = (c_1, c_2, c_3)$ and the set $\{ \operatorname{T}(\Vec{v_1}), \operatorname{T}(\Vec{v_2}), \operatorname{T}(\Vec{v_3})\}$ is a linearly dependent set.
+        
+        \end{Solution}
+        
+        \subsection*{Problem 34}
+        \begin{atmStat}
+        Let $T: \R^n \longrightarrow \R^m$ be a linear transformation. Show that if $T$ maps two linearly independent vectors onto a linearly dependent set, then the equation $\operatorname{T}(\Vec{x})=\Vec{0}$ has a nontrivial solution. 
+        \end{atmStat}
+        \begin{Solution}
+        Let $\{\Vec{v_1}, \Vec{v_2}\}$ be a linearly independent set in $\R^n$ and suppose $\{ \operatorname{T}(\Vec{v_1}), \operatorname{T}(\Vec{v_2})\}$ is a linearly dependent set. Then: 
+        
+        $$x_1\Vec{v_1} + x_2\Vec{v_2} = \Vec{0}$$ 
+        only has trivial solution and,
+        $$x_1 \operatorname{T}(\Vec{v_1})
+        + x_2 \operatorname{T}(\Vec{v_2})
+        = \Vec{0}$$
+        has a non-trivial solution $(x_1, x_2) = (c_1, c_2) \neq (0, 0)$. Then using linearity of $T$, 
+        \begin{align*}
+            c_1 \operatorname{T}(\Vec{v_1})
+            + c_2 \operatorname{T}(\Vec{v_2})
+            & = \operatorname{T}(c_1\Vec{v_1}) 
+            + \operatorname{T}(c_2\Vec{v_2}) \\
+            & = \operatorname{T}(c_1\Vec{v_1} + c_2\Vec{v_2})
+        \end{align*}
+        
+        And so, 
+        
+        $$
+        \operatorname{T}(c_1\Vec{v_1} + c_2\Vec{v_2})
+        = \Vec{0}
+        $$
+        
+        $\operatorname{T}(\Vec{x})=\Vec{0}$ has a non-trivial solution since the vector $\Vec{x} = c_1\Vec{v_1} + c_2\Vec{v_2}$ is a solution to $\operatorname{T}(\Vec{x})=\Vec{0}$ and it is not the zero vector since by assumption $x_1\Vec{v_1} + x_2\Vec{v_2}=\Vec{0}$ only has trivial solution but here $(c_1, c_2) \neq (0, 0)$.
+        
+        \end{Solution}
+        
+        \subsection*{Problem 36}
+        \begin{atmStat}
+        Let $T: \R^3 \longrightarrow \R^3$ be the transformation that projects each vector $\Vec{x} = (x_1, x_2, x_3)$ onto the plane $x_2 = 0$, So $\operatorname{T}(\Vec{x}) = (x_1,0, x_3)$. Show that $T$ is a linear transformation. 
+        \end{atmStat}
+        \begin{Solution}
+        Let $\Vec{v} = (v_1, v_2, v_3)$ and $\Vec{u} = (u_1, u_2, u_3)$ be any two vectors in $\R^3$ and let $\lambda \in \R$. Now consider:
+        
+        \begin{align*}
+            \operatorname{T}(\Vec{v}) +
+            \operatorname{T}(\Vec{u})
+            & = \operatorname{T}((v_1, v_2, v_3) + (u_1, u_2, u_3)) \\
+            & = \operatorname{T}(v_1 + u_1, v_2 + u_2, v_3 + u_3) \\
+            & = (v_1 + u_1, 0, v_3 + u_3) \\
+            & = (v_1, 0, v_3) + (u_1, 0, u_3) \\
+            & = \operatorname{T}(\Vec{v}) + \operatorname{T}(\Vec{u})
+        \end{align*}
+        And,
+        \begin{align*}
+            \operatorname{T}(\lambda\Vec{v})
+            & = \operatorname{T}(\lambda(v_1, v_2, v_3)) \\
+            & = \operatorname{T}(\lambda v_1, \lambda v_2, \lambda v_3) \\
+            & = (\lambda v_1, 0, \lambda v_3) \\
+            & = \lambda (v_1, 0, v_3) \\
+            & = \lambda \operatorname{T}(\Vec{v})
+        \end{align*}
+        
+        Since this is true for all $\Vec{v}, \Vec{u} \in \R^3$ and $\lambda \in \R$ Then $T$ is a linear transformation by definition.
+        
+        \end{Solution}
+        
+        \section*{1.9}
+        
+        \subsection*{Problem 22}
+        \begin{atmStat}
+        Let $T: \R^2 \longrightarrow \R^3$ be a linear transformation such that $\operatorname{T}(x_1, x_2) = (x_1-2x_2, -x_1+3x_2, 3x_1-2x_2)$ find $\Vec{x}$ such that $\operatorname{T}(\Vec{x})=(-1, 4, 9)$
+        \end{atmStat}
+        \begin{Solution}
+        Given the formula of the linear transformation we can find $\operatorname{T}(\Vec{e_1})=\operatorname{T}(1,0)$ and $\operatorname{T}(\Vec{e_2})=\operatorname{T}(0, 1)$. By theorem 10 we can write the transformation matrix $A$ and then we will solve the system $A\Vec{x}=\Vec{b}$ where $\Vec{b} = \begin{bmatrix} -1 \\ 4 \\ 9\end{bmatrix}$. Let's find the images of $\Vec{e_1}, \Vec{e_2}$ under $T$,
+        
+        $$\operatorname{T}(\Vec{e_1})
+        = \operatorname{T}(1, 0)
+        = (1 - 2(0), -1 + 3(0), 3(1) - 2(0))
+        = (1, -1, 3)$$
+        $$\operatorname{T}(\Vec{e_2})
+        = \operatorname{T}(0, 1)
+        = (0 - 2(1), -0 + 3(1), 3(0) - 2(1))
+        = (-2, 3, -2)$$
+        
+        
+        Therefore the transformation matrix A is:
+        
+        $$ 
+        A =
+        \begin{bmatrix}
+        1 & -2 \\
+        -1 & 3 \\
+        3 & 2
+        \end{bmatrix}
+        $$
+        
+        We can rewrite $\operatorname{T}(\Vec{x})$  as: $\operatorname{T}(\Vec{x}) = A\Vec{x}$. We want to find $\Vec{x}$ such that $\operatorname{T}(\Vec{x}) = \Vec{b}$ which is solved by row reducing the augmented matrix $\begin{bmatrix} A && \Vec{b}\end{bmatrix}$
+        
+        $$ 
+        \begin{bmatrix}
+        1 & -2 && -1\\
+        -1 & 3 && 4\\
+        3 & -2 && 9
+        \end{bmatrix}
+        \arrows3{}{R_2+R_1}{R_3-3R_1}
+        \begin{bmatrix}
+        1 & -2 && -1\\
+        0 & 1 && 3\\
+        0 & 4 && 12
+        \end{bmatrix}
+        \arrows3{R_1+2R_2}{}{R_3-4R_2}
+        \begin{bmatrix}
+        1 & 0 && 5\\
+        0 & 1 && 3\\
+        0 & 0 && 0
+        \end{bmatrix}
+        $$
+        
+        The solution is\\
+
+        \systeme{
+        x_1 = 5,
+        x_2 = 3
+        }\\
+        
+        In the desired form, $\Vec{x} = (5, 3)$ is such that $\operatorname{T}(\Vec{x}) = (-1, 4, 9)$
+    
+        \end{Solution}
+    
+\end{document}

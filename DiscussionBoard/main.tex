@@ -1,0 +1,189 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pifont}
+\usepackage{mdframed,color}
+\usepackage[left=3cm, right=3cm, top=3cm]{geometry}
+
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+
+\newcount\arrowcount
+\newcommand\arrows[1]{
+        \global\arrowcount#1
+        \ifnum\arrowcount>0
+                \begin{matrix}
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand\nextarrow[1]{
+        \global\advance\arrowcount-1
+        \ifx\relax#1\relax\else \xrightarrow{#1}\fi
+        \ifnum\arrowcount=0
+                \end{matrix}
+        \else
+                \\
+                \expandafter\nextarrow
+        \fi
+}
+
+\title{True/False Questions: Disc. Board.}
+\author{Rafael Laya}
+\date{Fall 2018}
+
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+
+\theoremstyle{statement}
+\newtheorem*{atmProp}{Proposition}
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\begin{document}
+    \maketitle
+    
+    \subsection*{Problem 1.}
+    
+    \begin{atmProp}
+    If the columns of $A$ are linearly independent, then the equation $A\vec{x}=\vec{0}$ has a unique solution.
+    \end{atmProp}
+    
+    \begin{atmProof}
+    Let $A$ be a matrix of order mxn whose columns are represented by the vectors $\vec{a_1}, \vec{a_2}, \dots, \vec{a_n} \in \R^m$.
+    Assume that the columns of A are linearly independent. Then, by definition the vector equation:
+    
+    $$x_1\vec{a_1} + x_2\vec{a_2} + \dots + x_n\vec{a_n} = \vec{0}$$
+    has unique solution where $x_i = 0$ for $i = 1, \dots, n$
+    The system above is equivalent to the matrix equation:
+    $$A\vec{x} = \vec{0}$$
+    And therefore the solution set is the same. That is, the solution to the equation $A\vec{x} = \vec{0}$ has a unique solution (which is $\vec{x} = \vec{0})$.
+    
+    \end{atmProof}
+    
+    \subsection*{Problem 2.}
+    \begin{atmProp}
+    If $A\vec{x}=\vec{0}$ has a unique solution, then the columns of $A$ are linearly independent. 
+    \end{atmProp}
+    \begin{atmProof}
+    Let $A$ be a matrix of order mxn whose columns are represented by the vectors $\vec{a_1}, \vec{a_2}, \dots, \vec{a_n} \in \R^m$. Assume that $A\vec{x} = \vec{0}$ has unique solution (the trivial solution). Then the equivalent vector equation with $\vec{x} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m\end{bmatrix}$
+    \end{atmProof}
+    
+    $$x_1\vec{a_1} + \dots + x_n\vec{a_n} = \vec{a_n}$$ has the same solution set as the matrix equation, a unique solution where $x_i = 0$ for $i = 1,\dots, n$. By definition the set of the columns of $A$, $\{\vec{a_1}, \dots, \vec{a_n}\}$ is linearly independent.
+    
+    \subsection*{Problem 3.}
+    \begin{atmProp}
+    If the columns of $A$ are linearly independent, then the equation $A\vec{x}=\vec{b}$ has a unique solution for any vector 
+    \end{atmProp} 
+    
+    This is false since $\vec{v_1} = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}$ and $\vec{v_2} = \begin{bmatrix} 0 \\ 1 \\ 0  \end{bmatrix}$ are linearly independent but $$\begin{bmatrix} 1 && 0 \\ 0 && 1 \\ 0 && 0 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ x_3\end{bmatrix} = \begin{bmatrix} 0\\0\\1 \end{bmatrix}$$ has no solution since the equivalent system of linear equations implies $1 = 0$
+    
+    \subsection*{Problem 4.}
+    \begin{atmProp}
+    If the columns of $A$ are linearly dependent, the equation $A\vec{x} = \vec{b}$ has infinitely many solutions for any vector $\vec{b}$.
+    \end{atmProp}
+    
+    This is false since $\vec{v_1} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ and $\vec{v_2} = \begin{bmatrix} 1 \\ 0  \end{bmatrix}$ are linearly dependent but $$\begin{bmatrix} 1 && 1 \\ 0 && 0 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2\end{bmatrix} = \begin{bmatrix} 0\\1 \end{bmatrix}$$ has no solution since the equivalent system of linear equations implies $0 = 1$
+    
+    \subsection*{Problem 5.}
+    \begin{atmProp}
+    If the columns of $A$ are linearly dependent and the equation $A\vec{x} = \vec{b}$ has at least one solution, then it has infinitely many solutions.
+    \end{atmProp}
+    \begin{atmProof}
+    Let $A$ be a matrix of order mxn whose columns are represented by the vectors $\vec{a_1}, \vec{a_2}, \dots, \vec{a_n} \in \R^m$. Suppose that the columns of A are linearly dependent. By definition there is a non-trivial solution for:
+    
+    $$x_1\vec{a_1}+\dots+x_n\vec{n}=\vec{0}$$ Let then $\vec{\lambda} = \begin{bmatrix} \lambda_1 \\ \vdots \\ \lambda_n\end{bmatrix}$ be any non-trivial solution to the equation above. Assume that $A\vec{x} = \vec{b}$ has at least a solution and let $\vec{p} = \begin{bmatrix}p_1\\ \vdots \\ p_n \end{bmatrix}$ be one solution. Now consider $k \in \R$ and:
+    
+    \begin{align*}
+        A(\vec{k\lambda} + \vec{p}) & = A(k\vec{\lambda}) + A\vec{p} \\
+        & = k(A\vec{\lambda}) + \vec{b} \\
+        & = k\vec{0} + \vec{b} \\
+        & = \vec{0} + \vec{b} \\
+        & = \vec{b}
+    \end{align*}
+    
+    We know the solution $k\vec{\lambda} + \vec{p} \neq \vec{p}$ since $\vec{\lambda} \neq \vec{0}$ and given that we can choose any value for $k$ then there must be infinite solutions to the equation $A\vec{x} = \vec{b}$
+    
+    \end{atmProof}
+    
+    \subsection*{Problem 6.}
+    \begin{atmProp}
+    If the equation $A\vec{x}=\vec{b}$ has a unique solution for some vector $\vec{b}$, the columns of $A$ are linearly independent.
+    \end{atmProp}
+    \begin{atmProof}
+    Let $A$ be a matrix of order mxn whose columns are represented by the vectors $\vec{a_1}, \vec{a_2}, \dots, \vec{a_n} \in \R^m$. Suppose that $A\vec{x} = \vec{b}$ has a unique solution for some vector b, then:
+    
+    $$x_1\vec{a_1} + \dots + x_n\vec{a_n} = \vec{b}$$ has unique solution. Suppose now that the columns of A are linearly dependent. That is, there exists $\lambda_1, \dots, \lambda_n \in \R$ such that:
+    $$\lambda_1\vec{a_1} + \dots + \lambda_n\vec{a_n} = \vec{0}$$
+    Now consider $\vec{\lambda} = \begin{bmatrix} \lambda_1 \\ \vdots \\ \lambda_n \end{bmatrix}$ and so: 
+    \begin{align*}
+    A(\vec{x} + \vec{\lambda}) & = A\vec{x} + A\vec{\lambda} \\ 
+    & = \vec{b} + {\vec{0}} \\ 
+    & = \vec{b}
+    \end{align*}
+    
+    This solution $\vec{x} + \vec{\lambda} \neq \vec{x}$ since $\vec{\lambda} \neq \vec{0}$ Therefore there is at least a second solution to $A\vec{x} = \vec{b}$ which is a contradiction to our hypothesis. By contradiction the columns of $A$ must be linearly independent.
+
+    \end{atmProof}
+    
+    \subsection*{Problem 7.}
+    \begin{atmProp}
+    If the equation $A\vec{x}=\vec{b}$ has a unique solution for some vector $\vec{b}$, then the equation $A\vec{x}=\vec{0}$ has a unique solution. 
+    \end{atmProp}
+    \begin{atmProof}
+    Suppose the equation $A\vec{x}=\vec{b}$ has a unique solution $\vec{x_1}$ for some vector $\vec{b}$, and suppose $A\vec{x}=\vec{0}$ has a solution other than the trivial solution $\vec{x_2}$. Then:
+    
+    \begin{align*}
+        A(\vec{x_1} + \vec{x_2}) & = A\vec{x_1} + A\vec{x_2}\\
+        & = \vec{b} + \vec{0}\\
+        & = \vec{b}
+    \end{align*}
+    Then $A\vec{x}=\vec{b}$ has two distinct solutions (since $\vec{x_2} \neq \vec{0}$) and by contradiction we are left with $A\vec{x}=\vec{0}$ must have an unique solution.
+    \end{atmProof}
+    
+    \subsection*{Problem 8.}
+    \begin{atmProp}
+    if the columns of $A$ are linearly dependent, then the columns of $A$ do not span $\R^m$.
+    \end{atmProp}
+    
+    This is false. Consider the matrix $$A=\begin{bmatrix} 1 & 0 & 1 \\ 
+    0 & 1 & 1\end{bmatrix}$$
+    
+    The first two columns Span $\R^2$ and the third column is the sum of the first two thus the set of all three columns of $A$ is linearly dependent.
+    
+    \subsection*{Problem 9.}
+    \begin{atmProp}
+    If $A$ is an $n x n$ matrix and the columns of $A$ are linearly dependent, then the equation $A\vec{x}=\vec{b}$ always has a unique solution. 
+    \end{atmProp}
+    
+    This is false, consider: 
+    
+    $$\begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2\end{bmatrix} 
+    = \begin{bmatrix} 1 \\ 1\end{bmatrix}$$
+    
+    This is an inconsistent system but the columns of $A$ contain the zero vector and thus are always linearly dependent.
+    
+    \subsection*{Problem 10.}
+    \begin{atmProp}
+    If $A$ is an $n x n$ matrix and the columns of $A$ are linearly independent, then the columns of $A$ span $\R^n$.
+    \end{atmProp}
+    \begin{atmProof}
+    Suppose $A$ is a $nxn$ matrix and that its columns $\vec{a_1}, \dots, \vec{a_n}$ are linearly independent. Then: 
+    
+    $$x_1\vec{a_1} + \dots + x_n\vec{a_n}=\vec{0}$$
+    only has trivial solution $x_i=0$ for $i=1,\dots,n$
+    
+    Therefore the reduced echelon form of $A$ must have a pivot in each of its $n$ columns, otherwise there would be free variables in $A\vec{x}=\vec{0}$ and infinitely many solutions (since $A\vec{x}=\vec{0}$ is always consistent with the trivial solution). Now, choose any vector $\vec{b} \in \R^n$ and the augmented matrix $\begin{bmatrix} A && \vec{b} \end{bmatrix}$ has already $n$ pivots in the first $n$ columns, it can only have $n$ pivots since it has $n$ rows and the rightmost column cannot be a pivot column therefore the system is consister (theorem 2). Because each variable is a basic variable (given the $n$ correspond to $n$ variables) there are no free variables and the solution is unique.
+    \end{atmProof}
+ 
+\end{document}

@@ -1,0 +1,192 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{systeme}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pifont}
+\usepackage{mdframed,color}
+\usepackage[letterpaper, left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+
+\theoremstyle{statement}
+\newtheorem*{atmProp}{Proposition}
+
+\theoremstyle{statement}
+\newtheorem*{atmStat}{Statement}
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\newenvironment{Solution}{\noindent\ignorespaces\paragraph{Solution:}}{\hfill \ding{122}\par\noindent}
+
+\newcount\arrowcount
+\newcommand\arrows[1]{
+        \global\arrowcount#1
+        \ifnum\arrowcount>0
+                \begin{matrix}
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand\nextarrow[1]{
+        \global\advance\arrowcount-1
+        \ifx\relax#1\relax\else \xrightarrow{#1}\fi
+        \ifnum\arrowcount=0
+                \end{matrix}
+        \else
+                \\
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand{\func}[2]{\operatorname{#1}(#2)}
+\newcommand{\trans}[2]{\func{#1}{\Vec{#2}}}
+
+\title{Mastery Homework 6}
+\author{Rafael Laya}
+\date{Fall 2018}
+
+\begin{document}
+    \maketitle
+    
+    \section*{Section 3.3}
+    \subsection*{Problem 25}
+    \begin{atmStat}
+    Use the concept of volume to explain why the determinant of a $3$ x $3$ matrix $A$ is zero if and only if $A$ is not invertible. 
+    \end{atmStat}
+    \begin{Solution}
+    Consider a matrix $A$ of $3$ x $3$ with columns $\Vec{a_1}, \Vec{a_2}, \Vec{a_3}$.
+    
+    Suppose that $\det(A)=0$, then by theorem 9 of this section the volume of the parallelepiped spanned by the columns of $A$, $\Vec{a_1}, \Vec{a_2}, \Vec{a_3}$ is $\det(A)$ which is zero. That means that the vectors are colinear or coplanar or all zero, which implies one of the vectors $\Vec{a_i}$ (with $i\in\{1, 2, 3\}$) is a linear combination of the other two and the set $S=\{\Vec{a_1}, \Vec{a_2}, \Vec{a_3}\}$ is a linearly dependent set. By the Invertible Matrix Theorem, the matrix $A$ is not invertible.
+    
+    Now, suppose that $A$ is not invertible. Using the Invertible Matrix Theorem, the columns of $A$ must be linearly dependent. This means that the vectors $\Vec{a_1}, \Vec{a_2}, \Vec{a_3}$ are either colinear or coplanar or all zero and the volume of the parallelepiped spanned by $\Vec{a_1}. \Vec{a_2}, \Vec{a_3}$ is the degenerate parallelepiped of zero volume. By theorem 9 of this section, the determinant of $A$ is zero. 
+    
+    Both paragraphs above prove what we wanted to show.
+    \end{Solution} 
+    
+    \section*{Section 4.1}
+    \subsection*{Problem 10}
+    \begin{atmStat}
+    Let $H$ be the set of all vectors of the form $\begin{bmatrix} 2t \\ 0 \\ -t \end{bmatrix}$. Show that $H$ is a subspace of $\R^3$.
+    \end{atmStat}
+    \begin{Solution}
+    Let's first re-write $H$ in set notation:
+    
+    $$
+    H = \left\{ 
+    \Vec{v} \in \R^3
+    \mid
+    \Vec{v} = t\begin{bmatrix} 2 \\ 0 \\ -1 \end{bmatrix}, t\in\R
+    \right\}
+    $$
+    Notice that any vector $\Vec{x}\in H$ has the form $\Vec{x}=t\begin{bmatrix}2\\0\\-1\end{bmatrix}$ and $H=\operatorname{Span}\left(\begin{bmatrix} 2\\0\\-1 \end{bmatrix} \right)$, By theorem 1 of this section, $H$ is a subspace of $\R^3$
+    
+    \end{Solution}
+    \subsection*{Problem 12}
+    \begin{atmStat}
+    Let $W$ be the set of all vectors of the form $\begin{bmatrix} s+3t \\ s-t \\ 2s-t \\ 4t \end{bmatrix}$. Show that $W$ is a subspace of $\R^4$,
+    \end{atmStat}
+    \begin{Solution}
+    Following the argument of problem 10, rewrite $W$ in set notation:
+    $$
+    W = \left\{ 
+    \Vec{v} \in \R^4 \mid
+    \Vec{v} = t \begin{bmatrix} 1\\1\\2\\4 \end{bmatrix} + s\begin{bmatrix} 3\\-1\\-1\\4\end{bmatrix}
+    ,\,\,\,\,\,\, s,t\in\R
+    \right\}
+    $$
+    Notice that any vector $\Vec{x}\in W$ has the form $\Vec{x}=t\begin{bmatrix}1\\1\\2\\4\end{bmatrix}+s\begin{bmatrix}3\\-1\\-1\\4\end{bmatrix}$ and therefore $W=\operatorname{Span}\left( 
+    \begin{bmatrix} 1\\1\\2\\4\end{bmatrix},
+    \begin{bmatrix}3\\-1\\-3\\4\end{bmatrix}
+    \right)$ which by theorem 1 of this section, $W$ is a subspace of $\R^4$
+    \end{Solution}
+    \subsection*{Problem 32}
+    \begin{atmStat}
+    Let $H$ and $K$ be subspaces of a vector space $V$. The intersection of $H$ and $K$, written as $H \cap K$, is the set of $\Vec{v}$ in $V$ that belong to both $H$ and $K$. Show that $H \cap K$ is a subspace of $V$. Give an example in $\R^2$ to show that the union of two subspaces is not, in general, a subspace.
+    \end{atmStat}
+    \begin{Solution}
+    Rewriting the intersection between $H$ and $K$ in set notation and the logical binary operator $\land$  (and):
+    $$
+    (H\cap K) = \left\{
+    \Vec{v}\in V
+    \mid
+    \Vec{v}\in H \land \Vec{v}\in K
+    \right\}
+    $$
+    Now, take any two vectors in the intersection between $H$ and $K$, that is, let $\Vec{v}, \Vec{u}\in(H\cap K)$ and also let $\lambda \in \R$. 
+    \begin{itemize}
+        \item The zero vector of $V$, $\Vec{0}_V$ is in the intersection between $H$ and $K$ since $H$ is a subspace of $V$ and so is $K$ (by assumption). Therefore, $\Vec{0}_V\in K$ and $\Vec{0}_V\in H$, which implies $\Vec{0}_V \in (H \cap K)$
+        \item Consider $\Vec{v}+\Vec{u}$. By definition, $\Vec{v}, \Vec{u} \in H$ and $\Vec{v}, \Vec{u} \in K$. By assumption $H$ and $K$ are subspaces, therefore both are closed under addition. Then $\Vec{v}+\Vec{u} \in H$ since $\Vec{v}, \Vec{u} \in H$ and $\Vec{v}+\Vec{u} \in K$ since $\Vec{v}, \Vec{u} \in K$. Finally, $\Vec{v}+\Vec{u} \in H$ and $\Vec{v} + \Vec{u} \in K$, which implies $\Vec{v}+\Vec{u} \in (H \cap K)$. 
+        \item Consider $\lambda\Vec{v}$. We know by definition that $\Vec{v}\in H$ and $\Vec{v} \in K$. By assumption $H$ and $K$ are subspaces and therefore closed under scalar multiplication. Then $\lambda\Vec{v} \in H$ since $\Vec{v} \in H$ and $\lambda\Vec{v} \in K$ since $\Vec{v} \in K$. Finally, $\lambda\Vec{v} \in K$ and $\lambda\Vec{v} \in H$ which implies $\lambda\Vec{v} \in (H \cap K)$
+    \end{itemize}
+    Considering the three items above, the intersection between $H$ and $K$, $H \cap K$ is a subspace of the vector space $V$, which is what we wanted to show. 
+    
+    We are also asked to give a counter-example of the union between two subspaces in $\R^2$ being a subspace. Let $H$ be the line with slope $1$ through the origin, and $K$ be the line with slope $-1$ through the origin. Then the union $H \cup K$ can be written as (Using the logical operator or, $\lor$):
+    
+    $$
+    H \cup K = \left\{ 
+    \Vec{v} \in \R^2 
+    \mid
+    \Vec{v} = t \begin{bmatrix} 
+    1 \\ 1
+    \end{bmatrix}
+    \lor 
+    \Vec{v} = s \begin{bmatrix}
+    1 \\ -1
+    \end{bmatrix}
+    \right\}
+    $$
+    Now take a non-zero vector in each of the lines, $\Vec{v}=\begin{bmatrix} 1 \\ 1\end{bmatrix} \in (H \cup K)$ and $\Vec{w}=\begin{bmatrix} 1\\-1 \end{bmatrix} \in (H \cup K)$ and consider $\Vec{v}+\Vec{w}=\begin{bmatrix} 2 \\ 0\end{bmatrix}$. Notice that $t\begin{bmatrix} 1 \\ 1 \end{bmatrix}=\begin{bmatrix} 2\\0\end{bmatrix}$ and $s\begin{bmatrix} 1\\-1\end{bmatrix}=\begin{bmatrix}2\\0\end{bmatrix}$ neither have solution since the vectors $\begin{bmatrix} 1\\1\end{bmatrix}, \begin{bmatrix} 1\\-1 \end{bmatrix}$ are not parallel to $\begin{bmatrix} 2\\0\end{bmatrix}$ and therefore $\Vec{v}+\Vec{w} \notin (H \cup K)$ and $H \cup K$ is not a subspace of $\R^2$.
+    
+    
+    \end{Solution}
+    
+    \section*{Section 4.2}
+    \subsection*{Problem 30}
+    \begin{atmStat}
+    Let $\operatorname{T}:V\longrightarrow W$ be a linear transformation from a vector space $V$ into a vector space $W$. Prove that the range of $\operatorname{T}$ is a subspace of $W$.
+    \end{atmStat}
+    \begin{Solution}
+    let $\trans{T}{v}, \trans{T}{w}$ be any two vectors in the range of $\operatorname{T}$ and let $c \in \R$. Now consider:
+    \begin{itemize}
+        \item The zero vector of $W$, $\Vec{0}_W$ is in $W$ since by assumption $\operatorname{T}$ is linear and therefore $\trans{T}{0_V}=\Vec{0}_W$ 
+        \item
+        $\func{T}{\Vec{v}+\Vec{w}}=\trans{T}{v}+\trans{T}{w}$ (since $\operatorname{T}$ is linear by assumption) and since $V$ is a vector space we have that $V$ is closed under addition and $\Vec{v}+\Vec{w} \in V$. This implies then that $\trans{T}{v}+\trans{T}{u} \in W$
+        \item $\func{T}{c\Vec{v}}=c\trans{T}{v}$ (since $\operatorname{T}$ is linear by assumption) and since $V$ is a vector space we have that $c\Vec{v} \in V$ and this implies $c\trans{T}{v} \in W$.
+    \end{itemize}
+    With the three bullet points above, we have shown that the range of $\operatorname{T}$ is a subspace of $W$
+    \end{Solution}
+    
+    \section*{Section 4.3}
+    \subsection*{Problem 29}
+    \begin{atmStat}
+    Let $S=\{ \Vec{v_1}, \dots, \Vec{v_k} \}$ be a set of $k$ vectors in $\R^n$, with $k < n$. Use a theorem from section 1.4 to explain why $S$ cannot be a basis for $\R^n$.
+    \end{atmStat}
+    \begin{Solution}
+    Because if $k < n$ then we have too few vectors to have enough information to span $\R^n$. With this in mind:
+    
+    Consider the matrix $A$ of order n x k with columns $\Vec{v_1}, \dots, \Vec{v_k}$. That is, $A=\begin{bmatrix} \Vec{v_1} & \dots & \Vec{v_k}\end{bmatrix}$. We know that $A$ has $n$ rows and $k$ columns and by assumption $k < n$ ($A$ has more rows than columns). Since $A$ has $k$ columns, $A$ can have at most $k$ pivot positions, and since $A$ has $n$ rows, there is atleast one row without a pivot. $A$ cannot have a pivot in every row, and by theorem 4 in chapter 1, the columns of $A$, do not span $\R^n$, which is equivalent to the vectors in $S$ do not span $\R^n$ and therefore by definition $S$ cannot be a basis for $\R^n$.
+    \end{Solution}
+    \subsection*{Problem 30}
+    \begin{atmStat}
+    Let $S= \{ \Vec{v_1}, \dots, \Vec{v_k}\}$ be a set of $k$ vectors in $\R^n$, with $k > n$. Use a theorem from Chapter 1 to explain why $S$ cannot be a basis for $\R^n$.
+    \end{atmStat}
+    \begin{Solution}
+    Because we have too many vectors that implies we must have redundant information and the set of vectors cannot be linearly independent. With this argument in mind:
+    
+    By direct usage of theorem 8 in chapter 1, we have that the set $S$ is a linearly dependent set since $k > n$ (more vectors than entries in each vector). Therefore, $S$ cannot be linearly independent set, and by definition of a basis $S$ cannot be a basis of $\R^n$.
+    \end{Solution}
+    
+\end{document}

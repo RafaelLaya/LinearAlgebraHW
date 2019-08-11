@@ -1,0 +1,140 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{systeme}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pifont}
+\usepackage{mdframed,color}
+\usepackage[letterpaper, left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+
+\theoremstyle{statement}
+\newtheorem*{atmProp}{Proposition}
+
+\theoremstyle{statement}
+\newtheorem*{atmStat}{Statement}
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\newenvironment{Solution}{\noindent\ignorespaces\paragraph{Solution:}}{\hfill \ding{122}\par\noindent}
+
+\newcount\arrowcount
+\newcommand\arrows[1]{
+        \global\arrowcount#1
+        \ifnum\arrowcount>0
+                \begin{matrix}
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand\nextarrow[1]{
+        \global\advance\arrowcount-1
+        \ifx\relax#1\relax\else \xrightarrow{#1}\fi
+        \ifnum\arrowcount=0
+                \end{matrix}
+        \else
+                \\
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand{\func}[2]{\operatorname{#1}(#2)}
+\newcommand{\trans}[2]{\func{#1}{\Vec{#2}}}
+
+\title{Mastery Homework 8}
+\author{Rafael Laya}
+\date{Fall 2018}
+
+\begin{document}
+    \maketitle
+
+    \section*{Section 6.1}
+    \subsection*{Problem 26}
+    \begin{atmStat}
+    Let $\Vec{u}=\begin{bmatrix} 5\\-6\\7 \end{bmatrix}$, and let $W$ be the set of all $\Vec{x} \in \R^3$ such that $\Vec{u} \cdot \Vec{x}=0$. What theorem in Chapter 4 can be used to show that $W$ is a subspace of $\R^3$? Describe $W$ in geometric language.
+    \end{atmStat}
+    \begin{Solution}
+    The geometric place of all vectors perpendicular to the vector $\Vec{u}$ in $\R^3$ is the plane $P$ that is perpendicular to $\Vec{u}$ that goes through the origin. That is, the plane $5x-6y+7z=0$. A plane in $\R^3$ is spanned by two vectors. The span of any set of vectors in a vector space $V$ is a subspace of $V$ by theorem 1 in chapter 4. Therefore $W$ has to be subspace of $\R^3$. For instance, solve for $z$ in the equation for the plane and find two vectors in the plane that are not parallel: $z = \frac{-5x+6y}{7}$. When $x=y=1$ we have $z=\frac{-5+6}{7}=\frac{1}{7}$ and $x=2y=2$ we have $z=\frac{-10+6}{7}=-\frac{4}{7}$ And so $W = \operatorname{Span}\left(\left\{ \begin{bmatrix} 1\\1\\\frac{1}{7} \end{bmatrix}, \begin{bmatrix} 2\\1\\-\frac{4}{7} \end{bmatrix}\right\}\right)$.
+    \end{Solution}
+    
+    \subsection*{Problem 28}
+    \begin{atmStat}
+    Suppose a vector $\Vec{y}$ is orthogonal to vectors $\Vec{u}$ and $\Vec{v}$. Show that $\Vec{y}$ is orthogonal to the vector $\Vec{u} + \Vec{v}$.
+    \end{atmStat}
+    \begin{Solution}
+    Suppose $\Vec{y}$ is orthogonal to $\Vec{u}$ and $\Vec{v}$ in some vector space $V$ with an inner product. Then $\Vec{y}\cdot\Vec{u} = 0$ and $\Vec{y}\cdot\Vec{v}=0$. Now consider the following:
+    
+    \begin{align*}
+    \Vec{y}\cdot(\Vec{u}+\Vec{v}) &= \Vec{y}\cdot\Vec{u} + \Vec{y}\cdot\Vec{v} \\
+    &= 0 + 0 \\
+    &= 0
+    \end{align*}
+    
+    Therefore $\Vec{y}$ is orthogonal to the vector $\Vec{u}+\Vec{v}$.
+    
+    \end{Solution}
+    
+    \section*{6.2}
+    \subsection*{Problem 32}
+    \begin{atmStat}
+    Let $\left\{ \Vec{v_1}, \Vec{v_2}\right\}$ be an orthogonal set of nonzero vectors, and let $c_1, c_2$ be any nonzero scalars. Show that $\left\{ c_1\Vec{v_2}, c_2\Vec{v_2}\right\}$ is also an orthogonal set. Since orthogonality of a set is defined in terms of pairs of vectors, this shows that if the vectors in an orthogonal set are normalized, the new set will still be orthogonal.
+    \end{atmStat}
+    \begin{Solution}
+    Suppose $\left\{ \Vec{v_1}, \Vec{v_2} \right\}$ is an orthogonal set of nonzero vectors in a vector space $V$ with inner product. Let $c_1, c_2$ be any nonzero scalars. Then $\Vec{v_1}\cdot\Vec{v_2}=0$. Now consider the following:
+    
+    \begin{align*}
+        (c_1\Vec{v_1})\cdot(c_2\Vec{v_2}) &= (c_1)(c_2)(\Vec{v_1}\cdot\Vec{v_2}) \\
+        &= (c_1c_2)(0) \\
+        &= 0 
+    \end{align*}
+    
+    Then $c_1\Vec{v_1}$ is orthogonal to $c_2\Vec{v_2}$ and the set $\left\{ c_1\Vec{v_1},c_2\Vec{v_2}\right\}$ is an orthogonal set.
+    \end{Solution}
+    
+    \subsection*{Problem 33}
+    \begin{atmStat}
+    Given $\Vec{u}\neq\Vec{0}$ in $\R^n$, let $L=\operatorname{Span}\left\{\Vec{u}\right\}$. Show that the mapping $\Vec{x}\mapsto\operatorname{proj_L}(\Vec{x})$ is a linear transformation.
+    \end{atmStat}
+    \begin{Solution}
+    Let $\operatorname{T}:\R^n\longrightarrow\R^n$ be the transformation such that $\operatorname{T}(\Vec{x})=\operatorname{proj_L}(\Vec{x})$ for some $\Vec{u}\neq\Vec{0}$ in $\R^n$. Where $L=Span(\Vec{u})$. Since $L$ contains one vector, we find an equation for $\operatorname{T}$:
+    
+    $$
+    \operatorname{T}(\Vec{x})=\frac{\Vec{x}\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\Vec{u}
+    $$
+    
+    Now consider any two vectors $\Vec{x_1}, \Vec{x_2}\in\R^n$ and $c\in\R$. Then: 
+    
+    \begin{align*}
+        \func{T}{\Vec{x_1}+\Vec{x_2}} &= \frac{(\Vec{x_1}+\Vec{x_2})\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\Vec{u} \\ 
+        &= \frac{\Vec{x_1}\cdot\Vec{u}+\Vec{x_2}\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\Vec{u} \\
+        &= \left(\frac{\Vec{x_1}\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}} + \frac{\Vec{x_2}\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\right)\Vec{u} \\
+        &= \frac{\Vec{x_1}\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\Vec{u}+\frac{\Vec{x_2}\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\Vec{u} \\
+        &= \func{T}{\Vec{x_1}}+\func{T}{x_2} 
+    \end{align*}
+    
+    And, 
+    
+    \begin{align*}
+        \func{T}{c\Vec{x_1}} &= \frac{(c\Vec{x_1})\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\Vec{u} \\ 
+        &= \frac{c(\Vec{x_1}\cdot\Vec{u})}{\Vec{u}\cdot\Vec{u}}\Vec{u} \\
+        &= c\left(\frac{\Vec{x_1}\cdot\Vec{u}}{\Vec{u}\cdot\Vec{u}}\Vec{u}\right) \\
+        &= c \func{T}{\Vec{x}}
+    \end{align*}
+    
+    Therefore $\operatorname{T}$ is a linear transformation.
+    \end{Solution}
+    
+\end{document}

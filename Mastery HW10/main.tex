@@ -1,0 +1,360 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{systeme}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pifont}
+\usepackage{mdframed,color}
+\usepackage[letterpaper, left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{commath}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+
+\theoremstyle{statement}
+\newtheorem*{atmProp}{Proposition}
+
+\theoremstyle{statement}
+\newtheorem*{atmStat}{Statement}
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\newenvironment{Solution}{\noindent\ignorespaces\paragraph{Solution:}}{\hfill \ding{122}\par\noindent}
+
+\newcount\arrowcount
+\newcommand\arrows[1]{
+        \global\arrowcount#1
+        \ifnum\arrowcount>0
+                \begin{matrix}
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand\nextarrow[1]{
+        \global\advance\arrowcount-1
+        \ifx\relax#1\relax\else \xrightarrow{#1}\fi
+        \ifnum\arrowcount=0
+                \end{matrix}
+        \else
+                \\
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand{\func}[2]{\operatorname{#1}(#2)}
+\newcommand{\trans}[2]{\func{#1}{\Vec{#2}}}
+
+\title{Mastery Homework 9}
+\author{Rafael Laya}
+\date{Fall 2018}
+
+\begin{document}
+    \maketitle
+
+    \section*{Section 6.6}
+    \subsection*{Problem 10}
+    \begin{atmStat}
+    Suppose radioactive substances $A$ and $B$ have decay constants of $.02$ and $.07$, respectively. If a mixture of these two substances at time $t = 0$ contains $M_A$ grams of $A$ and $M_B$ grams of $B$, then a model for the total amount $y$ of the mixture present at time $t$ is 
+    
+    $$
+    y = M_Ae^{-.02t}+M_Be^{-.07t}
+    $$
+    
+    Suppose the initial amounts $M_A$ and $M_B$ are unknown, but a scientist is able to measure the total amounts present at several times and records the following points $(t_i, y_i)$: $(10, 21.34), (11,20.68), (12, 20.05), (14, 18.87),$ and $(15, 18.30)$
+    
+    a. Describe linear model that can be used to estimate $M_A$ and $M_B$.
+    
+    b. $\textbf{[M]}$ Find the least-squares curve.
+    
+    
+    \end{atmStat}
+    \begin{Solution}
+    a. We have information about the total amount of mass of the radioactive substances $A$ and $B$ at different times. This data is measured and we can assume the error in the data is mostly random error which may not allow us to find an exact solution but will allows us to use a linear model of least squares to estimate the coefficients $M_A, M_B$ that correspond to the initial masses of the substances $A, B$, respectively.
+    
+    We seek coefficients $M_A, M_B$ such that:
+    
+    \systeme[M_Ae, M_Be]{
+    M_Ae^{-0.02(10)}+M_Be^{-0.07(10)}= 21.34,
+    M_Ae^{-0.02(11)}+M_Be^{-0.07(11)}= 20.68,
+    M_Ae^{-0.02(12)}+M_Be^{-0.07(12)}= 20.05,
+    M_Ae^{-0.02(14)}+M_Be^{-0.07(14)}= 18.87,
+    M_Ae^{-0.02(15)}+M_Be^{-0.07(15)}= 18.30
+    }
+    =
+    \systeme[M_Ae, M_Be]{
+    M_Ae^{-0.2}+M_Be^{-0.7}= 21.34,
+    M_Ae^{-0.22}+M_Be^{-0.77}= 20.68,
+    M_Ae^{-0.24}+M_Be^{-0.84}= 20.05,
+    M_Ae^{-0.28}+M_Be^{-0.98}= 18.87,
+    M_Ae^{-0.30}+M_Be^{-1.05}= 18.30
+    }
+    
+    We want the least squares solution to $A\vec{x}=\vec{y}$, where: 
+    
+    $$
+    A=\begin{bmatrix} 
+    e^{-0.2} & e^{-0.7}  \\
+    e^{-0.22} & e^{-0.77}  \\
+    e^{-0.24} & e^{-0.84}  \\
+    e^{-0.28} & e^{-0.98}  \\
+    e^{-0.30} & e^{-1.05} \\
+    \end{bmatrix}
+    ,
+    \vec{x} = \begin{bmatrix} M_A \\ M_B \\ \end{bmatrix}
+    ,
+    \vec{y}= \begin{bmatrix} 21.34 \\ 20.68 \\ 20.05 \\ 18.87 \\ 18.30 \end{bmatrix}
+    $$
+    
+    We could even define a residual vector $\vec{\epsilon}$ in which case $\epsilon=\begin{bmatrix} \epsilon_1 \\ \epsilon_2 \\ \epsilon_3 \\ \epsilon_4 \\ \epsilon_5\end{bmatrix}$ defined as $\vec{y}-A\vec{x}$ and thus $A\vec{x}+\vec{\epsilon}=\vec{y}$ which when minimized gives the least squares solution to the normal equation $A^{T}A\vec{x}=A^{T}\vec{y}$
+    
+    b. Problems marked with an $\textbf{[M]}$ are solved numerically by a calculator or math package. In this case using a TI calculator: 
+    
+    $$
+    \vec{x}=
+    \begin{bmatrix}
+    19.942 \\ 10.099
+    \end{bmatrix}
+    $$
+    
+    To two decimal places, the amount of mass of substance A was $19.94$ grams and the amount of mass of substance B was $10.10$ grams. The model of the total amount of substance is then:
+    
+    $$
+    y=19.94e^{-0.02t}+10.10e^{-0.07}
+    $$
+    
+    \end{Solution}
+    
+    \section*{Section 5.1}
+    \subsection*{Problem 25}
+    \begin{atmStat}
+    Let $\lambda$ be an eigenvalue of an invertible matrix $A$. Show that $\lambda^{-1}$ is an eigenvalue of A^{-1}.
+    \end{atmStat}
+    \begin{Solution}
+    Let $A$ be an invertible matrix of nxn with an eigenvalue $\lambda$ ($\lambda\neq 0$). Then: 
+    
+    $$
+    A\Vec{v}=\lambda\Vec{v}
+    $$
+    For some $\Vec{v}\in\R^n$. Multiplying by $A^{-1}$ in the equation above and then by $\frac{1}{\lambda}$ we have that:
+    
+    \begin{align*}
+        A\Vec{v}&=\lambda\Vec{v} \\
+        A^{-1}(A\Vec{v}) &= A^{-1} (\lambda\Vec{v}) \\
+        (A^{-1}A)\Vec{v} &= \lambda(A^{-1}\vec{v}) \\
+        I_n\vec{v} &= \lambda(A^{-1}\vec{v}) \\
+        \frac{1}{\lambda}\vec{v} &= \frac{1}{\lambda} \lambda(A^{-1}\vec{v}) \\
+        \lambda^{-1}\vec{v} &= A^{-1} \vec{v}
+    \end{align*}
+    
+    Which shows that $\lambda^{-1}$ is an eigenvalue of $A^{-1}$
+    
+    \end{Solution}
+    
+    \subsection*{Problem 31}
+    \begin{atmStat}
+    Let $A$ be the matrix of the linear transformation $T$. Without writing $A$, find an eigenvalue of $A$ and describe the eigenspace.
+    $T$ is the transformation on $\R^2$ that reflects points across some line through the origin.
+    \end{atmStat}
+    \begin{Solution}
+    Take some non-zero vector $\vec{v}$ through the line through the origin that is used to reflect all other vectors. Then, under the transformation the vectors parallel to this vector $\vec{v}$ remain the same. That is, $\operatorname{T}(\vec{kv})=k\vec{v}=A(k\vec{v})$ for any $k\in\R$. Then an eigenvalue for the matrix $A$ is $\lambda=1$ and a basis for this eigenspace is $\{\vec{v}\}$
+    \end{Solution}
+    
+    \subsection*{Problem 32}
+    \begin{atmStat}
+    Let $A$ be the matrix of the linear transformation $T$. Without writing $A$, find an eigenvalue of $A$ and describe the eigenspace.
+    $T$ is the transformation on $\R^3$ that rotates points about some line through the origin.
+    \end{atmStat}
+    \begin{Solution}
+    Let $\vec{v}$ be a non-zero vector on the line that goes through the origin that is used to reflect all the other vectors under the transformation $T$. Then, any vector on the line is left the same after the transformation. That is, $\operatorname{T}(k\vec{v})=(k\vec{v})=A(k\vec{v})$ for any $k\in\R$. Therefore an eigenvalue of the matrix $A$ is $\lambda=1$ and a basis for this eigenspace is $\{\vec{v}\}$
+    \end{Solution}
+    
+    \section*{5.2}
+    \subsection*{Problem 24}
+    \begin{atmStat}
+    Show that if $A$ and $B$ are similar, then $\det(A)=\det(B)$
+    \end{atmStat}
+    \begin{Solution}
+    Let $A$, $B$ be two similar matrices (We proved in class that if $A$ is similar to $B$ then $B$ is similar to $A$, therefore no need to specify which one is similar to which one). Then, there exists an invertible matrix $P$ such that: 
+    
+    $$
+    A=P^{-1}BP
+    $$
+    Taking determinant,
+    \begin{align*}
+        \det(A) &= \det(P^{-1}BP) \\
+        &= \det(P^{-1})\det(B)\det(P) \\
+        &= \frac{1}{\det(P)}\det(B)\det(P) \\
+        &= \left(\frac{\det(P)}{\det(P)}\right)\det(B) \\
+        &= (1) \det(B) \\
+        &= \det(B)
+    \end{align*}
+    Therefore $\det(A)=\det(B)$, which is exactly what we wanted to show.
+    \end{Solution}
+    
+    \subsection*{Problem 27}
+    \begin{atmStat}
+    Let $A=\begin{bmatrix} 0.5 & 0.2 & 0.3 \\ 0.3 & 0.8 & 0.3 \\ 0.2 & 0 & 0.4 \end{bmatrix}, \Vec{v_1}=\begin{bmatrix} 0.3\\0.6\\0.1\end{bmatrix}, \Vec{v_2}=\begin{bmatrix} 1\\-3\\2\end{bmatrix}, \Vec{v_3}=\begin{bmatrix}-1\\0\\1\end{bmatrix}$ and $\Vec{w}=\begin{bmatrix} 1\\1\\1 \end{bmatrix}$
+    
+    a. Show that $\Vec{v_1}, \Vec{v_2}$ and $\Vec{v_3}$ are eigenvectors of $A$.
+    
+    b. Let $\Vec{x_0}$ be any vector in $\R^3$ with nonnegative entries whose sum is 1. Explain why there are constants $c_1, c_2, c_3$ such that $\Vec{x_0}=c_1\Vec{v_1}+c_2\Vec{v_2}+c_3\Vec{v_3}$. Compute $\Vec{w}^T\Vec{x_0}$ and deduce that $c_1=1$.
+    
+    c. For $k=1,2,\dots$, define $\Vec{x_k}=A^k\Vec{x_0}$, with $\Vec{x_0}$ as in part (b). Show that $\Vec{x_k}\longrightarrow \Vec{v_1}$ as $k$ increases.
+    \end{atmStat}
+    \begin{Solution}
+    a. A vector $\vec{v}$ is an eigenvector of the matrix $A$ if and only if there exists some $\lambda\in\R$ such that $A\vec{v}=\lambda\vec{v}$. Let's show there is such lambda for these vectors:
+    
+    $$
+    \begin{bmatrix}
+    0.5 & 0.2 & 0.3 \\
+    0.3 & 0.8 & 0.3 \\
+    0.2 &   0 & 0.4 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+    0.3 \\
+    0.6 \\
+    0.1 \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    0.3 \\
+    0.6 \\
+    0.1 \\
+    \end{bmatrix}
+    $$
+    $\vec{v_1}$ is an eigenvector of $A$ with eigenvalue of $1$.
+    
+    $$
+    \begin{bmatrix}
+    0.5 & 0.2 & 0.3 \\
+    0.3 & 0.8 & 0.3 \\
+    0.2 &   0 & 0.4 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 \\
+    -3 \\
+    2 \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    0.5 \\
+    -1.5 \\
+    1 \\
+    \end{bmatrix}
+    = \frac{1}{2}
+    \begin{bmatrix}
+    1 \\
+    -3 \\
+    2
+    \end{bmatrix}
+    $$
+    $\vec{v_2}$ is an eigenvector of $A$ with eigenvalue $\frac{1}{2}$.
+    
+    $$
+    \begin{bmatrix}
+    0.5 & 0.2 & 0.3 \\
+    0.3 & 0.8 & 0.3 \\
+    0.2 &   0 & 0.4 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+    -1 \\
+    0 \\
+    1 \\
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    -0.2 \\
+    0 \\
+    0.2 \\
+    \end{bmatrix}
+    = \frac{1}{5}
+    \begin{bmatrix}
+    -1 \\
+    0 \\
+    1
+    \end{bmatrix}
+    $$
+    $\vec{v_3}$ is an eigenvector of $A$ with eigenvalue of $\frac{1}{5}$.
+    
+    b. Because $A$ has three eigenvectors with three different eigenvalues, by theorem the set $S=\{\vec{v_1}, \vec{v_2}, \vec{v_3}\}$ is a linearly independent set in $\R^3$, and therefore forms a basis for $\R^3$ ($\R^3$ is dimension three). Now, since $\vec{x_0}$ is in $\R^3$, it can be written as a linear combination of the vectors in the base $S$ (since the base $S$ spans $\R^3$).
+    
+    $$
+    \vec{w}^T\vec{x_0} =
+    \begin{bmatrix} 1 & 1 & 1 \end{bmatrix}
+    \begin{bmatrix} x_1 \\ x_2 \\ x_3 \end{bmatrix}
+    = \begin{bmatrix} x_1+x_2+x_3 \end{bmatrix} 
+    = \begin{bmatrix} 1 \end{bmatrix}
+    $$
+    
+    Because the sum of the entries of $\vec{x_0}$ sum to one. This means that:
+    
+    $$
+    \begin{bmatrix} 1 \end{bmatrix}
+    = \vec{w}^T\vec{x_0}
+    = c_1 
+    \begin{bmatrix} 1 & 1 & 1 \end{bmatrix}
+    \begin{bmatrix} 0.3 \\ 0.6 \\ 0.1 \end{bmatrix} + c_2 \begin{bmatrix} 1 & 1 & 1 \end{bmatrix} \begin{bmatrix} 1 \\ -3 \\ 2 \end{bmatrix} + c_3 \begin{bmatrix} 1 & 1 & 1 \end{bmatrix} \begin{bmatrix} -1 \\ 0 \\ 1 \end{bmatrix}
+    $$
+    Which leads to:
+    $$
+    \begin{bmatrix} 1 \end{bmatrix}
+    =
+    c_1 \begin{bmatrix} 1 \end{bmatrix} + c_2\begin{bmatrix} 0 \end{bmatrix} + c_3 \begin{bmatrix} 0 \end{bmatrix}
+    $$
+    Or simply, $c_1 = 1$.
+    
+    c. For $k=1$, recall that $\vec{v_2}, \vec{v_3}$ are eigenvectors of $A$ with eigenvalues $1/2, 1/5$, respectively. We have:
+    
+    \begin{align*}
+        \vec{x_1} = A^1\vec{x_0} &= A(\vec{v_1} + c_2\vec{v_2} + c_3\vec{v_3}) \\
+        &= A\vec{v_1} + c_2A\vec{v_2} + c_3A\vec{v_3} \\
+        &= \vec{v_1} + c_2\left(\frac{1}{2}\right)\vec{v_2} + c_3\left(\frac{1}{5}\right)\vec{v_3}
+    \end{align*} 
+    
+    For $k=2$ we have:
+    \begin{align*}
+        \vec{x_2} = A\vec{x_1} &= A(\vec{v_1} + c_2\left(\frac{1}{2}\right)\vec{v_2} + c_3\left(\frac{1}{5}\right)\vec{v_3}) \\
+        &= A\vec{v_1} + c_2\left(\frac{1}{2}\right)A\vec{v_2} + c_3\left(\frac{1}{5}\right)A\vec{v_3} \\
+        &= \vec{v_1} + c_2\left(\frac{1}{2}\right)^2\vec{v_2} + c_3\left(\frac{1}{5}\right)^2\vec{v_3}
+    \end{align*} 
+    
+    Using induction we can prove that for any positive integer $k$, 
+    
+    $$
+    \vec{x_k} = \vec{v_1} + c_2\left(\frac{1}{2}\right)^k\vec{v_2} + c_3\left(\frac{1}{5}\right)^k\vec{v_3}
+    $$
+    
+    Assume then that the equation above is true for some $k=n$ (we already showed this is true for $n=1$ and $n=2$): Then
+    
+    $$
+    \vec{x_n} = \vec{v_1} + c_2\left(\frac{1}{2}\right)^n\vec{v_2} + c_3\left(\frac{1}{5}\right)^n\vec{v_3}
+    $$
+    
+    For $k=n+1$ we have:
+    
+    \begin{align*}
+        \vec{x}_{n+1} = A\vec{x_n} &= A(\vec{v_1} + c_2\left(\frac{1}{2}\right)^n\vec{v_2} + c_3\left(\frac{1}{5}\right)^n\vec{v_3}) \\
+        &= A\vec{v_1} + c_2\left(\frac{1}{2}\right)^nA\vec{v_2} + c_3\left(\frac{1}{5}\right)^nA\vec{v_3} \\
+        &= \vec{v_1} + c_2\left(\frac{1}{2}\right)^{n+1}\vec{v_2} + c_3\left(\frac{1}{5}\right)^{n+1}\vec{v_3}
+    \end{align*} 
+    
+    Thus if the equality is true for some $k=n$ then it will be true for the next integer, $k=n+1$. This is true for $n=1$ and $n=2$ and it must be true then for any positive integer. So, we have:
+    
+    $$
+    \vec{x_k} = \vec{v_1} + c_2\left(\frac{1}{2}\right)^k\vec{v_2} + c_3\left(\frac{1}{5}\right)^k\vec{v_3}
+    $$
+    
+    Now, as $k$ grows the quantities $\frac{1}{2}$, $\frac{1}{5}$ decay exponentially to zero, and because $c_2, c_3$ are constants then the coefficients of $\vec{v_2}, \vec{v_3}$ decay exponentially to zero. Therefore $c_2\left(\frac{1}{2}\right)\vec{v_2}$ goes to $\vec{0}$ as well as $c_3\left(\frac{1}{5}\right)\vec{v_3}$. Finally, $\vec{x_k} \longrightarrow \vec{v}$
+    \end{Solution}
+\end{document}

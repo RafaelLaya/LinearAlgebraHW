@@ -1,0 +1,347 @@
+\documentclass[12pt, letterpaper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{systeme}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{pifont}
+\usepackage{mdframed,color}
+\usepackage[letterpaper, left=3cm, right=3cm, top=3cm, bottom=3cm]{geometry}
+\usepackage{commath}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
+\newtheoremstyle{statement}{3pt}{3pt}{}{}{\bfseries}{:}{.5em}{}
+
+\theoremstyle{statement}
+\newtheorem*{atmProp}{Proposition}
+
+\theoremstyle{statement}
+\newtheorem*{atmStat}{Statement}
+
+\newenvironment{atmProof}{\noindent\ignorespaces\paragraph{Proof:}}{\hfill \ding{122}\par\noindent}
+
+\newenvironment{Solution}{\noindent\ignorespaces\paragraph{Solution:}}{\hfill \ding{122}\par\noindent}
+
+\newcount\arrowcount
+\newcommand\arrows[1]{
+        \global\arrowcount#1
+        \ifnum\arrowcount>0
+                \begin{matrix}
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand\nextarrow[1]{
+        \global\advance\arrowcount-1
+        \ifx\relax#1\relax\else \xrightarrow{#1}\fi
+        \ifnum\arrowcount=0
+                \end{matrix}
+        \else
+                \\
+                \expandafter\nextarrow
+        \fi
+}
+
+\newcommand{\func}[2]{\operatorname{#1}(#2)}
+\newcommand{\trans}[2]{\func{#1}{\Vec{#2}}}
+
+\title{Mastery Homework 9}
+\author{Rafael Laya}
+\date{Fall 2018}
+
+\begin{document}
+    \maketitle
+
+    \section*{Section 6.3}
+    \subsection*{Problem 24}
+    \begin{atmStat}
+    Let $W$ be a subspace of $\R^n$ with an orthogonal basis $\{\Vec{w_1}, \dots, \Vec{w_p}\}$, and let $\{\Vec{v_1}, \dots, \Vec{v_q}\}$ be an orthogonal basis for $W^\perp$. 
+    
+    a. Explain why $\{\Vec{w_1},\dots,\Vec{w_p},\Vec{v_1},\dots,\Vec{v_q}\}$ is an orthogonal set. 
+    
+    b. Explain why the set in part (a) spans $\R^n$.
+    
+    c. Show that $dim(W)+din(W^\perp)=n$.
+    \end{atmStat}
+    \begin{Solution}
+    
+    a. Recall the definition of $W^\perp$: 
+    $$
+    W^\perp = \left\{ \Vec{v} \in \R^n \middle\mid \Vec{v}\cdot\Vec{w}=0, \forall \Vec{w}\in W \right\}
+    $$
+    We know $\Vec{w_i}\cdot\Vec{w_j}=0$ for $i,j\in\{1,\dots,p\}$ when $i\neq j$ and $\Vec{v_i}\cdot\Vec{v_j}=0$ for $i,j\in\{1,\dots,q\}$ when $i\neq j$ by hypothesis. We only have to show that $\Vec{w_i}\cdot\Vec{v_j}$ for $i=1,\dots,p$ and $j=1,\dots, q$. Now, from the definition of $W^\perp$ we know that for any $\Vec{v}\in W$ and $\Vec{w} \in W^\perp$ we have $\Vec{v}\cdot\Vec{w}=0$. Notice then that $\Vec{w_i} \in W$ and $\Vec{v_j} \in W^\perp$ since they are part of a basis for $W$ and $W^\perp$, respectively.\\
+    
+    b. By the Orthogonal Decomposition Theorem, any vector $\Vec{x}$ can be written as $\Vec{x}=\Vec{x}_w+\Vec{x}_{w_\perp}$ where $\Vec{x_w}\in W$ and $\Vec{x}_{w_\perp} \in W^\perp$. Since $\{\Vec{w_1}, \dots, \Vec{w_p}\}$ is a basis for $W$ and $\{ \Vec{v_1}, \dots, \Vec{v_q}\}$ is a basis for $W^\perp$ there must exist scalars $\lambda_1, \dots, \lambda_p, \beta_1, \dots, \beta_q$ such that: 
+    
+    $$
+    \lambda_1 \Vec{w}_1 + \dots + \lambda_p \Vec{w}_p = \Vec{x}_w
+    $$
+    And, 
+    $$
+    \beta_1 \Vec{v_1} + \dots + \lambda_q \Vec{v_q} = \Vec{x}_{w_\perp} 
+    $$
+    Adding these two equations:
+    
+    $$
+    \lambda_1\Vec{w_1} + \dots + \lambda_p \Vec{w_p} + 
+    \beta_1\Vec{v_1} + \dots + \beta_q \Vec{v_q}
+    = \Vec{x}_w + \Vec{x}_{w_\perp}
+    = \Vec{x}
+    $$
+    
+    Therefore any $\Vec{x}\in\R^n$ is also in $\operatorname{Span}(\lambda_1\Vec{w_1}, \dots, \lambda_p\Vec{w_p}, \beta_1\Vec{v_1}, \dots, \beta_q \Vec{v_q})$, or simply $\operatorname{Span}(\lambda_1\Vec{w_1}, \dots, \lambda_p\Vec{w_p}, \beta_1\Vec{v_1}, \dots, \beta_q \Vec{v_q})=\R^n$ \\
+    
+    c. Let $S=\{\lambda_1\Vec{w_1}, \dots, \lambda_p\Vec{w_p}, \beta_1\Vec{v_1}, \dots, \beta_q \Vec{v_q}\}$We know that S spans $\R^n$ and that $S$ is an orthogonal set which by one of the first theorems of this chapter is a linearly independent set. This implies that $S$ is a basis for $\R^n$ and therefore it must contain $n$ vectors, $p+q=n$. Finally:
+    $$
+    \dim(\R^n)=\dim(S)=\dim(W)+\dim(W^\perp)=p+q=n
+    $$
+    Or simply:
+    $$
+    \dim(W)+\dim(W^\perp)=n
+    $$
+    Which is exactly what we wanted to show.
+    \end{Solution}
+    
+    \section*{Section 6.5}
+    \subsection*{Problem 14}
+    \begin{atmStat}
+    Let $A=\begin{bmatrix}
+    2 & 1 \\
+    -3 & -4 \\
+    3 & 2
+    \end{bmatrix}, \Vec{b} = \begin{bmatrix} 5\\4\\4\end{bmatrix}, \Vec{u}=\begin{bmatrix} 4\\-5\end{bmatrix},$ and $\Vec{v}=\begin{bmatrix}6\\-5\end{bmatrix}.$ Compute $A\Vec{u}$ and $A\Vec{v}$, and compare them with $\Vec{b}$. Is it possible that at least one of $\Vec{u}$ or $\Vec{v}$ could be a least-squares solution of $A\Vec{x}=\Vec{b}$?
+    \end{atmStat}
+    \begin{Solution}
+    $$
+        A\Vec{u} = 
+        \begin{bmatrix} 
+        2 & 1 \\
+        -3 & -4 \\
+        3 & 2
+        \end{bmatrix} 
+        \begin{bmatrix}
+        4 \\ 
+        -5
+        \end{bmatrix} \\
+        &=
+        \begin{bmatrix}
+        3 \\
+        8 \\
+        2
+        \end{bmatrix} \\
+    $$
+    $$
+        A\Vec{v} = 
+        \begin{bmatrix} 
+        2 & 1 \\
+        -3 & -4 \\
+        3 & 2
+        \end{bmatrix} 
+        \begin{bmatrix}
+        6 \\ 
+        -5
+        \end{bmatrix} \\
+        &=
+        \begin{bmatrix}
+        7 \\
+        2 \\
+        8
+        \end{bmatrix} \\
+    $$
+    
+    \begin{align*}
+    \norm{\Vec{b}-A\Vec{u}} &= \norm{
+    \begin{bmatrix}
+    5 \\ 
+    4 \\ 
+    4
+    \end{bmatrix}
+    -
+    \begin{bmatrix}
+    3 \\ 
+    8 \\ 
+    2
+    \end{bmatrix}
+    } \\
+    &=\norm{
+    \begin{bmatrix}
+    2 \\
+    -4 \\
+    2
+    \end{bmatrix}
+    } \\
+    &= \sqrt{2^2 + 4^2 + 2^2} \\
+    &= \sqrt{24}
+    \end{align*}
+    
+    \begin{align*}
+    \norm{\Vec{b}-A\Vec{v}} &= \norm{
+    \begin{bmatrix}
+    5 \\ 
+    4 \\ 
+    4
+    \end{bmatrix}
+    -
+    \begin{bmatrix}
+    7 \\ 
+    2 \\ 
+    8
+    \end{bmatrix}
+    } \\
+    &=\norm{
+    \begin{bmatrix}
+    -2 \\
+    2 \\
+    -4
+    \end{bmatrix}
+    } \\
+    &= \sqrt{2^2 + 2^2 + 4^2} \\
+    &= \sqrt{24}
+    \end{align*}
+    
+    By the definition alone of least-squares we can have multiple least-squares solutions. However, notice that:
+    
+    $$
+    \det(A^T A) =
+    \det\left(
+    \begin{bmatrix} 
+    2 & -3 & 3 \\ 
+    1 & -4 & 2 
+    \end{bmatrix}
+    \begin{bmatrix}
+    2 & 1\\
+    -3 & -4\\
+    3 & 2
+    \end{bmatrix}
+    \right)
+    = 
+    \det\left(
+    \begin{bmatrix}
+    22 & 20 \\
+    20 &  21
+    \end{bmatrix}
+    \right)
+    = 22(21)-20^2 = 62 \neq 0
+    $$
+    
+    Therefore $A^TA$ is invertible and the least squares solution is unique. Therefore $\Vec{u}, \Vec{v}$ cannot be a least squares solution to $A\Vec{x}=\Vec{b}$.
+    
+    \end{Solution}
+    
+    \subsection*{Problem 25}
+    \begin{atmStat}
+    Describe all least-squares solutions of the system 
+    
+    \systeme{x+y=2,x+y=4}
+    \end{atmStat}
+    \begin{Solution}
+    The system is equivalent to the matrix equation $A\Vec{x}=\Vec{b}$ where $A=\begin{bmatrix} 1 & 1 \\ 1 & 1 \end{bmatrix}$ and $\Vec{b}=\begin{bmatrix}2 \\ 4\end{bmatrix}$. Let's solve the normal system $A^TA=A^T\Vec{b}$: 
+    
+    $$
+    A^TA = \begin{bmatrix} 
+    1 & 1 \\
+    1 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+    1 & 1 \\
+    1 & 1
+    \end{bmatrix}
+    = \begin{bmatrix}
+    2 & 2 \\
+    2 & 2
+    \end{bmatrix}
+    $$
+    $$
+    A^T\Vec{b} = 
+    \begin{bmatrix}
+    1 & 1 \\
+    1 & 1 \\
+    \end{bmatrix}
+    \begin{bmatrix}
+    2 \\ 4
+    \end{bmatrix}
+    =\begin{bmatrix}
+    6 \\ 6
+    \end{bmatrix}
+    $$
+    \end{Solution}
+    
+    Let's reduce the augmented matrix associated to the system:
+    
+    $$
+    \begin{bmatrix}
+    2 & 2 & 6 \\
+    2 & 2 & 6 \\
+    \end{bmatrix}
+    \arrows2{}{R_2-R_1}
+    \begin{bmatrix}
+    2 & 2 & 6 \\
+    0 & 0 & 0 \\
+    \end{bmatrix}
+    \arrows2{\frac{R_1}{2}}{}
+    \begin{bmatrix}
+    1 & 1 & 3 \\
+    0 & 0 & 0 
+    \end{bmatrix}
+    $$
+    The least squares solutions is any vector in the line
+    $x+y=3$ which is simply a line in between $x+y=2$ and $x+y=4$.
+    
+    And the image of any least-squares solution is ($x=3-y$ from $x+y=3$): 
+    
+    $$
+    A\Vec{x}=
+    \begin{bmatrix}
+    1 & 1 \\ 
+    1 & 1
+    \end{bmatrix}
+    \begin{bmatrix}
+    3 - y \\ 
+    y
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+    3-y+y \\
+    3-y+y
+    \end{bmatrix}
+    =\begin{bmatrix}
+    3\\3
+    \end{bmatrix}
+    $$
+    With error:
+    $$
+    \norm{\Vec{b}-A\Vec{x}} 
+    =
+    \norm{
+    \begin{bmatrix} 
+    2 \\
+    4 
+    \end{bmatrix}
+    -
+    \begin{bmatrix}
+    3 \\
+    3
+    \end{bmatrix}
+    }
+    =
+    \norm{
+    \begin{bmatrix}
+    -1 \\
+    1
+    \end{bmatrix}
+    }
+    =
+    \sqrt{1^2+1^2}
+    = \sqrt{2}
+    $$
+\end{document}
